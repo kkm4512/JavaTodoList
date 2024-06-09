@@ -35,7 +35,8 @@
 [ database 설계 ]
 
 1. 유저,todolist DB를 별개로 만든다
-2. todolist 의 게시글들에 유저의 id를 접목시켜서 만들게한다.
+2. todoli
+st 의 게시글들에 유저의 id를 접목시켜서 만들게한다.
 3. 나중에 유저가 작성한 todolist 들을 확인 해야한다면, 서로 join 하여 todolist 들 보여주기
 
 [ 내가 지금 생각중인것들 ]

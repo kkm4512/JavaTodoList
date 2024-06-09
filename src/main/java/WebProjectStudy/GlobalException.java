@@ -3,9 +3,11 @@ package WebProjectStudy;
 import WebProjectStudy.exception.InvalidFormatException;
 import WebProjectStudy.exception.InvalidLengthException;
 import WebProjectStudy.exception.IsNotFoundException;
+import WebProjectStudy.typeClass.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,22 +20,28 @@ public class GlobalException {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         // 에러 메시지를 저장할 Map 생성
-        Map<String, String> errors = new HashMap<>();
+        Map<String,String> errors = new HashMap<>();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        // 유효성 검사 실패한 모든 에러를 순회
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            // 에러가 발생한 필드 이름 가져오기
+        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+            //error 발생된 이름
             String fieldName = ((FieldError) error).getField();
-            // 에러 메시지 가져오기
+            //error 발생한 이름의 메시지내용
             String errorMessage = error.getDefaultMessage();
-            // 에러 정보를 Map에 저장 (필드 이름 -> 에러 메시지)
-            errors.put(fieldName, errorMessage);
-        });
 
-        // BAD_REQUEST (400) 상태 코드로 에러 메시지를 응답 본문에 담아 반환
-        return ResponseEntity.badRequest().body(errors);
+            //에러메시지에 공백이 포함되어있으면 status 바꾸기
+            if (errorMessage.contains("공백")){
+                status = HttpStatus.NOT_FOUND;
+            }
+            //errors 객체에 추가
+            errors.put(fieldName,errorMessage);
+        }
+
+        //ErrorResponse 타입 지정해주고 return
+        ErrorResponse responseBody = new ErrorResponse(status.value(),errors);
+        return ResponseEntity.status(status).body(responseBody);
     }
 
     //공백확인
