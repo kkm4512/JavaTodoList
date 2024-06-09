@@ -3,6 +3,7 @@ package WebProjectStudy;
 import WebProjectStudy.exception.InvalidFormatException;
 import WebProjectStudy.exception.InvalidLengthException;
 import WebProjectStudy.exception.IsNotFoundException;
+import WebProjectStudy.exception.MemberDuplicateException;
 import WebProjectStudy.typeClass.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,12 @@ public class GlobalException {
     //올바른 글자수 확인
     @ExceptionHandler(InvalidLengthException.class)
     public ResponseEntity<String> InvalidLengthException(InvalidLengthException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    //회원 중복 오류
+    @ExceptionHandler(MemberDuplicateException.class)
+    public ResponseEntity<String> MemberDuplicateException(MemberDuplicateException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 

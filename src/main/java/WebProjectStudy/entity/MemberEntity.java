@@ -66,7 +66,7 @@ public class MemberEntity {
         }
 
         if (password.length()<5 || password.length() > 20){
-            throw new InvalidLengthException("비밀번호는 최소 5글자, 최대 10글자 입니다");
+            throw new InvalidLengthException("비밀번호는 최소 5글자, 최대 20글자 입니다");
         }
 
         if (nickname.length()<5 || nickname.length() > 10){
