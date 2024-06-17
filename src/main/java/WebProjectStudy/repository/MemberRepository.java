@@ -1,5 +1,4 @@
 package WebProjectStudy.repository;
-import WebProjectStudy.dto.MemberDTO;
 import WebProjectStudy.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

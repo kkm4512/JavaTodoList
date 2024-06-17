@@ -28,7 +28,7 @@ public class MemberService implements MemberServiceInterface{
     public boolean registerMember(MemberDTO member) {
         utility.duplicateMemberCheck(member.getId());
         MemberEntity memberEntity = utility.dtoToEntity(member);
-        MemberEntity savedEntity = memberRepository.save(memberEntity);
+        memberRepository.save(memberEntity);
         return true;
     }
 
@@ -53,13 +53,18 @@ public class MemberService implements MemberServiceInterface{
     //회원삭제
     @Override
     public boolean deleteMember(Long id) {
-        return false;
+        Optional<MemberEntity> getMember = memberRepository.findById(id);
+        getMember.orElseThrow(() -> new IsNotFoundException("회원을 찾을 수 없습니다"));
+        return true;
     }
 
     //멤버수정
     @Override
     public boolean updateMember(Long id, MemberDTO member) {
-        return false;
+        MemberEntity getMember = memberRepository.findById(id).orElseThrow(() -> new IsNotFoundException("회원을 찾을 수 없습니다"));
+        getMember.setNickname(member.getNickname());
+        getMember.setPassword(member.getPassword());
+        getMember.setName(member.getName());
+        return true;
     }
-
 }
