@@ -9,8 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDTO {
-    private Long id;
-
     @NotBlank(message = "이름은 공백 일 수 없습니다")
     @Size(max = 10, min = 5, message = "이름은 최소 5글자, 최대 10글자 입니다")
     @Pattern(regexp = "^[a-zA-Z0-9]+$",message = "이름은 숫자와, 영문자로만 구성 가능합니다")
@@ -25,4 +23,14 @@ public class MemberDTO {
     @Size(max = 10, min = 5, message = "닉네임은 최소 5글자, 최대 10글자 입니다")
     @Pattern(regexp = "^[가-힣]+$",message = "닉네임은 한국어로만 구성 가능합니다")
     private String nickname;
+
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
 }

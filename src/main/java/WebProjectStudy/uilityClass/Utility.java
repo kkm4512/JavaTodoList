@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.swing.text.html.parser.Entity;
+import java.lang.reflect.Member;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,12 +21,7 @@ public class Utility {
      * DTO -> Entity
      */
     public MemberEntity dtoToEntity(MemberDTO memberDTO){
-        MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setId(memberDTO.getId());
-        memberEntity.setName(memberDTO.getName());
-        memberEntity.setNickname(memberDTO.getNickname());
-        memberEntity.setPassword(memberDTO.getPassword());
-        return memberEntity;
+        return new MemberEntity(memberDTO.getName(),memberDTO.getPassword(),memberDTO.getNickname());
     }
 
     /***
@@ -33,7 +29,6 @@ public class Utility {
      */
     public MemberDTO entityToDto(MemberEntity memberEntity){
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberEntity.getId());
         memberDTO.setName(memberEntity.getName());
         memberDTO.setNickname(memberEntity.getNickname());
         memberDTO.setPassword(memberEntity.getPassword());
@@ -43,8 +38,8 @@ public class Utility {
     /***
      * Member 중복 체크
      */
-    public void duplicateMemberCheck(Long id){
-        memberRepository.findById(id).ifPresent(member -> {
+    public void duplicateMemberCheck(MemberDTO member){
+        memberRepository.findByName(member.getName()).ifPresent(m -> {
             throw new MemberDuplicateException("중복된 회원입니다");
         });
     }

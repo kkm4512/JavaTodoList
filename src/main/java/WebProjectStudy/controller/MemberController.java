@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/member")
 public class MemberController {
 
     private final MemberService memberService;

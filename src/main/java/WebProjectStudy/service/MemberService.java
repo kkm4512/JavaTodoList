@@ -26,9 +26,16 @@ public class MemberService implements MemberServiceInterface{
     //회원가입
     @Override
     public boolean registerMember(MemberDTO member) {
-        utility.duplicateMemberCheck(member.getId());
-        MemberEntity memberEntity = utility.dtoToEntity(member);
-        memberRepository.save(memberEntity);
+        try {
+            utility.duplicateMemberCheck(member);
+            MemberEntity memberEntity = utility.dtoToEntity(member);
+            System.out.println(memberEntity);
+            memberRepository.save(memberEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 

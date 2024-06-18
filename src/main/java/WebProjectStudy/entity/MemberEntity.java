@@ -24,8 +24,6 @@ public class MemberEntity {
     @Column
     private String nickname;
 
-    public MemberEntity() {}
-
     public MemberEntity(String name, String password, String nickname) {
         this.name = name;
         this.password = password;
@@ -55,6 +53,8 @@ public class MemberEntity {
         if(!password.matches("^[a-zA-Z0-9!@#$%^&*()_+=]+$")){
             throw new InvalidFormatException("비밀번호는 숫자와, 영문자,특수문자만 구성 가능합니다");
         }
+
+
 
         if(!nickname.matches("^[가-힣]+$")){
             throw new InvalidFormatException("닉네임은 한국어만 입력 가능합니다");
