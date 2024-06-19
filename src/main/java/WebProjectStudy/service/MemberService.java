@@ -1,8 +1,9 @@
 package WebProjectStudy.service;
 
 import WebProjectStudy.dto.MemberDTO;
+import WebProjectStudy.dto.MemberLoginDTO;
 import WebProjectStudy.entity.MemberEntity;
-import WebProjectStudy.exception.IsNotFoundException;
+import WebProjectStudy.exception.HandleIsNotFoundException;
 import WebProjectStudy.repository.MemberRepository;
 import WebProjectStudy.uilityClass.Utility;
 import jakarta.transaction.Transactional;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,16 +26,18 @@ public class MemberService implements MemberServiceInterface{
     //회원가입
     @Override
     public boolean registerMember(MemberDTO member) {
-        try {
-            utility.duplicateMemberCheck(member);
-            MemberEntity memberEntity = utility.dtoToEntity(member);
-            System.out.println(memberEntity);
-            memberRepository.save(memberEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        utility.duplicateMemberCheck(member);
+        MemberEntity memberEntity = utility.dtoToEntity(member);
+        memberRepository.save(memberEntity);
+        return true;
+    }
 
+    @Override
+    public boolean loginMember(MemberLoginDTO member) {
+        utility.duplicateMemberCheckLogin(member);
+
+        MemberEntity memberEntity = utility.dtoToEntityLogin(member);
+        utility.checkIdMemberExistsOrThrow(memberEntity);
         return true;
     }
 
@@ -53,7 +55,7 @@ public class MemberService implements MemberServiceInterface{
     @Override
     public Optional<MemberDTO> getMemberById(Long id) {
         Optional<MemberEntity> getMember = memberRepository.findById(id);
-        if (getMember.isEmpty()) throw new IsNotFoundException("회원을 찾을 수 없습니다");
+        if (getMember.isEmpty()) throw new HandleIsNotFoundException("회원을 찾을 수 없습니다");
         return getMember.map(utility::entityToDto);
     }
 
@@ -61,14 +63,14 @@ public class MemberService implements MemberServiceInterface{
     @Override
     public boolean deleteMember(Long id) {
         Optional<MemberEntity> getMember = memberRepository.findById(id);
-        getMember.orElseThrow(() -> new IsNotFoundException("회원을 찾을 수 없습니다"));
+        getMember.orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
         return true;
     }
 
     //멤버수정
     @Override
     public boolean updateMember(Long id, MemberDTO member) {
-        MemberEntity getMember = memberRepository.findById(id).orElseThrow(() -> new IsNotFoundException("회원을 찾을 수 없습니다"));
+        MemberEntity getMember = memberRepository.findById(id).orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
         getMember.setNickname(member.getNickname());
         getMember.setPassword(member.getPassword());
         getMember.setName(member.getName());

@@ -1,9 +1,6 @@
 package WebProjectStudy;
 
-import WebProjectStudy.exception.InvalidFormatException;
-import WebProjectStudy.exception.InvalidLengthException;
-import WebProjectStudy.exception.IsNotFoundException;
-import WebProjectStudy.exception.MemberDuplicateException;
+import WebProjectStudy.exception.*;
 import WebProjectStudy.typeClass.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,32 +38,46 @@ public class GlobalException {
         }
 
         //ErrorResponse 타입 지정해주고 return
-        ErrorResponse responseBody = new ErrorResponse(status.value(),errors);
+        ErrorResponse responseBody = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), errors);
         return ResponseEntity.status(status).body(responseBody);
     }
 
     //공백확인
-    @ExceptionHandler(IsNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFoundException(IsNotFoundException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    @ExceptionHandler(HandleIsNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(HandleIsNotFoundException e){
+        return createErrorResponse(e.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     //올바른 형식확인
-    @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<String> InvalidFormatException(InvalidFormatException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    @ExceptionHandler(HandleInvalidFormatException.class)
+    public ResponseEntity<ErrorResponse> InvalidFormatException(HandleInvalidFormatException e){
+        return createErrorResponse(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
     //올바른 글자수 확인
-    @ExceptionHandler(InvalidLengthException.class)
-    public ResponseEntity<String> InvalidLengthException(InvalidLengthException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    @ExceptionHandler(HandleInvalidLengthException.class)
+    public ResponseEntity<ErrorResponse> InvalidLengthException(HandleInvalidLengthException e){
+        return createErrorResponse(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
     //회원 중복 오류
-    @ExceptionHandler(MemberDuplicateException.class)
-    public ResponseEntity<String> MemberDuplicateException(MemberDuplicateException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    @ExceptionHandler(HandleMemberDuplicateException.class)
+    public ResponseEntity<ErrorResponse> handleMemberDuplicateException(HandleMemberDuplicateException e) {
+        return createErrorResponse(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    //회원 존재 확인 (ID)
+    @ExceptionHandler(HandleCheckIdMember.class)
+    public ResponseEntity<ErrorResponse> handleMemberDuplicateException(HandleCheckIdMember e) {
+        return createErrorResponse(e.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    //에러 동일한 형식으로 프론트 던져주기
+    public ResponseEntity<ErrorResponse> createErrorResponse(String msg,HttpStatus status){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", msg);
+        ErrorResponse responseBody = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), errors);
+        return ResponseEntity.status(status).body(responseBody);
     }
 
 }
