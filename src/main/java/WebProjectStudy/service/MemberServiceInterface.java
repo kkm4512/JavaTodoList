@@ -2,6 +2,8 @@ package WebProjectStudy.service;
 
 import WebProjectStudy.dto.MemberDTO;
 import WebProjectStudy.dto.MemberLoginDTO;
+import WebProjectStudy.entity.MemberEntity;
+
 
 import java.util.List;
 import java.util.Optional;

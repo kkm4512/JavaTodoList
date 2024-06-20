@@ -25,10 +25,8 @@ public class BaseMemberDTO {
 
     @Override
     public String toString() {
-        return "BaseMemberDTO{" +
-                "id=" + id +
+        return  "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+                ", password='" + password + '\'';
     }
 }

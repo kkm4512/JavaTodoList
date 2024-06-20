@@ -18,7 +18,6 @@ public class MemberDTO extends BaseMemberDTO{
     @Override
     public String toString() {
         return super.toString() +
-                "nickname='" + nickname + '\'' +
-                '}';
+                "nickname='" + nickname + '\'';
     }
 }

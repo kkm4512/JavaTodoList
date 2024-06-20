@@ -2,10 +2,10 @@ package WebProjectStudy.controller;
 
 import WebProjectStudy.dto.MemberDTO;
 import WebProjectStudy.dto.MemberLoginDTO;
+import WebProjectStudy.entity.MemberEntity;
 import WebProjectStudy.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +21,6 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public boolean signUp(@Valid @RequestBody MemberDTO member) {
-        System.out.println(member);
         return memberService.registerMember(member);
     }
 

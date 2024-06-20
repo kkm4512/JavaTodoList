@@ -3,34 +3,19 @@ package WebProjectStudy.entity;
 import WebProjectStudy.exception.HandleInvalidFormatException;
 import WebProjectStudy.exception.HandleInvalidLengthException;
 import WebProjectStudy.exception.HandleIsNotFoundException;
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-@MappedSuperclass
+@Embeddable
 public class BaseMemberEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
     private String name;
-
-    @Column
     private String password;
 
     public BaseMemberEntity() {}
-
-    @Override
-    public String toString() {
-        return "BaseMemberEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 
     public BaseMemberEntity(String name, String password) {
         this.name = name;

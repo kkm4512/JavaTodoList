@@ -6,6 +6,7 @@ import WebProjectStudy.entity.MemberEntity;
 import WebProjectStudy.exception.HandleIsNotFoundException;
 import WebProjectStudy.repository.MemberRepository;
 import WebProjectStudy.uilityClass.Utility;
+import com.sun.jdi.request.DuplicateRequestException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class MemberService implements MemberServiceInterface{
 
 
@@ -28,16 +29,15 @@ public class MemberService implements MemberServiceInterface{
     public boolean registerMember(MemberDTO member) {
         utility.duplicateMemberCheck(member);
         MemberEntity memberEntity = utility.dtoToEntity(member);
+
         memberRepository.save(memberEntity);
         return true;
     }
 
     @Override
     public boolean loginMember(MemberLoginDTO member) {
-        utility.duplicateMemberCheckLogin(member);
-
-        MemberEntity memberEntity = utility.dtoToEntityLogin(member);
-        utility.checkIdMemberExistsOrThrow(memberEntity);
+        MemberEntity tempMemberEntity = utility.dtoToEntityLogin(member);
+        MemberEntity memberEntity = memberRepository.findByBaseMemberEntityName(member.getName()).orElseThrow(() -> new HandleIsNotFoundException("존재하지 않는 회원 입니다."));
         return true;
     }
 
@@ -72,8 +72,9 @@ public class MemberService implements MemberServiceInterface{
     public boolean updateMember(Long id, MemberDTO member) {
         MemberEntity getMember = memberRepository.findById(id).orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
         getMember.setNickname(member.getNickname());
-        getMember.setPassword(member.getPassword());
-        getMember.setName(member.getName());
+        getMember.setNickname(member.getNickname());
+        getMember.getBaseMemberEntity().setPassword(member.getPassword());
+
         return true;
     }
 }
