@@ -19,18 +19,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/signUp")
+    @PostMapping("signUp")
     public boolean signUp(@Valid @RequestBody MemberDTO member) {
         return memberService.registerMember(member);
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public boolean login(@Valid @RequestBody MemberLoginDTO member) {
         return memberService.loginMember(member);
     }
 
     @GetMapping("findAll")
-    public List<MemberDTO> findAll(){
+    public List<MemberEntity> findAll(){
         return memberService.getAllMember();
     }
 

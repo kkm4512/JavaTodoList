@@ -43,12 +43,9 @@ public class MemberService implements MemberServiceInterface{
 
     //모든회원조회
     @Override
-    public List<MemberDTO> getAllMember() {
-        List<MemberEntity> memberEntities = memberRepository.findAll();
-        if (memberEntities.isEmpty()) return List.of();
-        return memberEntities.stream()
-                .map(utility::entityToDto)
-                .collect(Collectors.toList());
+    public List<MemberEntity> getAllMember() {
+        return memberRepository.findAll();
+
     }
 
     //회원찾기

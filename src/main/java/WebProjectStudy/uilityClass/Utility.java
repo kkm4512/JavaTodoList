@@ -27,9 +27,9 @@ public class Utility {
      */
     public MemberDTO entityToDto(MemberEntity memberEntity){
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setName(memberEntity.getBaseMemberEntity().getName());
+        memberDTO.setName(memberEntity.getName());
         memberDTO.setNickname(memberEntity.getNickname());
-        memberDTO.setName(memberEntity.getBaseMemberEntity().getPassword());
+        memberDTO.setName(memberEntity.getPassword());
         return memberDTO;
     }
 

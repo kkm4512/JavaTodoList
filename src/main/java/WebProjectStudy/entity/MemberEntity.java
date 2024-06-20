@@ -63,6 +63,22 @@ public class MemberEntity{
 
     }
 
+    public String getName() {
+        return baseMemberEntity.getName();
+    }
+
+    public void setName(String name) {
+        baseMemberEntity.setName(name);
+    }
+
+    public String getPassword() {
+        return baseMemberEntity.getPassword();
+    }
+
+    public void setPassword(String password) {
+        baseMemberEntity.setPassword(password);
+    }
+
     @Override
     public String toString() {
         return "MemberEntity{" +
