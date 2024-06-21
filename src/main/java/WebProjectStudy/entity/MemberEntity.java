@@ -16,35 +16,60 @@ public class MemberEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "name")),
-            @AttributeOverride(name = "password", column = @Column(name = "password"))
-    })
+    @Column
+    private String name;
 
-    private BaseMemberEntity baseMemberEntity;
+    @Column
+    private String password;
 
     @Column
     private String nickname;
 
-    public MemberEntity() {
-        this.baseMemberEntity = new BaseMemberEntity();
-    }
-
+    MemberEntity() {}
 
     public MemberEntity(String name, String password) {
-        this.baseMemberEntity = new BaseMemberEntity(name,password);
-//        baseMemberEntity.validate();
+        this.name = name;
+        this.password = password;
+        validateNamePassword();
     }
 
     public MemberEntity(String name, String password, String nickname) {
-        this.baseMemberEntity = new BaseMemberEntity(name,password);
+        this.name = name;
+        this.password = password;
         this.nickname = nickname;
-        validate();
+        validateAll();
     }
 
-    protected void validate(){
-        baseMemberEntity.validate();
+    protected void validateNamePassword(){
+        if (name == null || name.isEmpty()){
+            throw new HandleIsNotFoundException("[Entity] 이름은 공백일 수 없습니다");
+        }
+
+        if (password == null || password.isEmpty()){
+            throw new HandleIsNotFoundException("[Entity] 비밀번호는 공백일 수 없습니다");
+        }
+
+        //올바른 형식인지 체크
+        if(!name.matches("^[a-zA-Z0-9]+$")){
+            throw new HandleInvalidFormatException("[Entity] 이름은 숫자와, 영문자로만 구성 가능합니다");
+        }
+
+        if(!password.matches("^[a-zA-Z0-9!@#$%^&*()_+=]+$")){
+            throw new HandleInvalidFormatException("[Entity] 비밀번호는 숫자와, 영문자,특수문자만 구성 가능합니다");
+        }
+
+        //올바른 글자수로 들어왔는지 체크
+        if (name.length()<5 || name.length() > 10){
+            throw new HandleInvalidLengthException("[Entity] 이름은 최소 5글자, 최대 10글자 입니다");
+        }
+
+        if (password.length()<5 || password.length() > 20){
+            throw new HandleInvalidLengthException("[Entity] 비밀번호는 최소 5글자, 최대 20글자 입니다");
+        }
+    }
+
+    protected void validateAll(){
+
         //공백 확인
         if (nickname == null || nickname.isEmpty()){
             throw new HandleIsNotFoundException("[Entity] 닉네임은 공백일 수 없습니다");
@@ -60,32 +85,33 @@ public class MemberEntity{
             throw new HandleInvalidLengthException("[Entity] 닉네임은 최소 5글자, 최대 10글자 입니다");
         }
 
+        if (name == null || name.isEmpty()){
+            throw new HandleIsNotFoundException("[Entity] 이름은 공백일 수 없습니다");
+        }
 
-    }
+        if (password == null || password.isEmpty()){
+            throw new HandleIsNotFoundException("[Entity] 비밀번호는 공백일 수 없습니다");
+        }
 
-    public String getName() {
-        return baseMemberEntity.getName();
-    }
+        //올바른 형식인지 체크
+        if(!name.matches("^[a-zA-Z0-9]+$")){
+            throw new HandleInvalidFormatException("[Entity] 이름은 숫자와, 영문자로만 구성 가능합니다");
+        }
 
-    public void setName(String name) {
-        baseMemberEntity.setName(name);
-    }
+        if(!password.matches("^[a-zA-Z0-9!@#$%^&*()_+=]+$")){
+            throw new HandleInvalidFormatException("[Entity] 비밀번호는 숫자와, 영문자,특수문자만 구성 가능합니다");
+        }
 
-    public String getPassword() {
-        return baseMemberEntity.getPassword();
-    }
+        //올바른 글자수로 들어왔는지 체크
+        if (name.length()<5 || name.length() > 10){
+            throw new HandleInvalidLengthException("[Entity] 이름은 최소 5글자, 최대 10글자 입니다");
+        }
 
-    public void setPassword(String password) {
-        baseMemberEntity.setPassword(password);
-    }
+        if (password.length()<5 || password.length() > 20){
+            throw new HandleInvalidLengthException("[Entity] 비밀번호는 최소 5글자, 최대 20글자 입니다");
+        }
 
-    @Override
-    public String toString() {
-        return "MemberEntity{" +
-                "id=" + id +
-                ", baseMemberEntity=" + baseMemberEntity +
-                ", nickname='" + nickname + '\'' +
-                '}';
+
     }
 
 

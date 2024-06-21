@@ -38,6 +38,7 @@ public class Utility {
      * DTO -> Entity
      */
     public MemberEntity dtoToEntityLogin(MemberLoginDTO memberDTO){
+        System.out.println(memberDTO);
         return new MemberEntity(memberDTO.getName(),memberDTO.getPassword());
     }
 
@@ -47,8 +48,8 @@ public class Utility {
      */
     public MemberLoginDTO entityToDtoLogin(MemberEntity memberEntity){
         MemberLoginDTO memberDTO = new MemberLoginDTO();
-        memberDTO.setName(memberEntity.getBaseMemberEntity().getName());
-        memberDTO.setName(memberEntity.getBaseMemberEntity().getPassword());
+        memberDTO.setName(memberEntity.getName());
+        memberDTO.setName(memberEntity.getPassword());
         return memberDTO;
     }
 
@@ -56,7 +57,7 @@ public class Utility {
      * Member 중복 체크
      */
     public void duplicateMemberCheck(MemberDTO member){
-        memberRepository.findByBaseMemberEntityName(member.getName()).ifPresent(m -> {
+        memberRepository.findByName(member.getName()).ifPresent(m -> {
             throw new HandleMemberDuplicateException("중복된 회원입니다");
         });
     }
@@ -66,7 +67,7 @@ public class Utility {
      * Member 중복 체크
      */
     public void duplicateMemberCheckLogin(MemberLoginDTO member){
-        memberRepository.findByBaseMemberEntityName(member.getName()).ifPresent(m -> {
+        memberRepository.findByName(member.getName()).ifPresent(m -> {
             throw new HandleMemberDuplicateException("중복된 회원입니다");
         });
     }
