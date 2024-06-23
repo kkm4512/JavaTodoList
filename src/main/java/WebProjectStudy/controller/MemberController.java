@@ -35,18 +35,20 @@ public class MemberController {
     }
 
     @PostMapping("findOne")
-    public Optional<MemberDTO> findOne(@RequestBody Long id){
+    public Optional<MemberEntity> findOne(@RequestBody Long id){
         return memberService.getMemberById(id);
     }
 
     @DeleteMapping("removeMember")
     public boolean removeMember(@RequestBody Long id){
+        System.out.println(id);
         return memberService.deleteMember(id);
     }
 
     @PutMapping("updateMember")
-    public boolean updateMember(@RequestBody Long id, @Valid @RequestBody MemberDTO member){
-        return memberService.updateMember(id,member);
+    public boolean updateMember(@Valid @RequestBody MemberDTO member){
+        System.out.println(member);
+        return memberService.updateMember(member);
     }
 
 }

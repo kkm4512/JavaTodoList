@@ -12,8 +12,8 @@ public interface MemberServiceInterface {
     public boolean registerMember(MemberDTO member);
     public boolean loginMember(MemberLoginDTO member);
     public List<MemberEntity> getAllMember();
-    public Optional<MemberDTO> getMemberById(Long id);
+    public Optional<MemberEntity> getMemberById(Long id);
     public boolean deleteMember(Long id);
-    public boolean updateMember(Long id,MemberDTO member);
+    public boolean updateMember(MemberDTO member);
 
 }

@@ -48,10 +48,10 @@ public class MemberService implements MemberServiceInterface{
 
     //회원찾기
     @Override
-    public Optional<MemberDTO> getMemberById(Long id) {
+    public Optional<MemberEntity> getMemberById(Long id) {
         Optional<MemberEntity> getMember = memberRepository.findById(id);
         if (getMember.isEmpty()) throw new HandleIsNotFoundException("회원을 찾을 수 없습니다");
-        return getMember.map(utility::entityToDto);
+        return getMember;
     }
 
     //회원삭제
@@ -59,13 +59,14 @@ public class MemberService implements MemberServiceInterface{
     public boolean deleteMember(Long id) {
         Optional<MemberEntity> getMember = memberRepository.findById(id);
         getMember.orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
+        memberRepository.delete(getMember.orElseThrow());
         return true;
     }
 
     //멤버수정
     @Override
-    public boolean updateMember(Long id, MemberDTO member) {
-        MemberEntity getMember = memberRepository.findById(id).orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
+    public boolean updateMember(MemberDTO member) {
+        MemberEntity getMember = memberRepository.findById(member.getId()).orElseThrow(() -> new HandleIsNotFoundException("회원을 찾을 수 없습니다"));
         getMember.setNickname(member.getNickname());
         getMember.setName(member.getName());
         getMember.setPassword(member.getPassword());
