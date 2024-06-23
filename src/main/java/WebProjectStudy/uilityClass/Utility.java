@@ -1,11 +1,12 @@
 package WebProjectStudy.uilityClass;
 
-import WebProjectStudy.dto.MemberDTO;
-import WebProjectStudy.dto.MemberLoginDTO;
+import WebProjectStudy.dto.Board.BoardDTO;
+import WebProjectStudy.dto.Member.MemberDTO;
+import WebProjectStudy.dto.Member.MemberLoginDTO;
+import WebProjectStudy.entity.BoardEntity;
 import WebProjectStudy.entity.MemberEntity;
-import WebProjectStudy.exception.HandleCheckIdMember;
 import WebProjectStudy.exception.HandleMemberDuplicateException;
-import WebProjectStudy.repository.MemberRepository;
+import WebProjectStudy.repository.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ public class Utility {
 
     private final MemberRepository memberRepository;
     /***
+     * Member
      * DTO -> Entity
      */
     public MemberEntity dtoToEntity(MemberDTO memberDTO){
@@ -23,6 +25,7 @@ public class Utility {
     }
 
     /***
+     * Member
      * Entity -> DTO
      */
     public MemberDTO entityToDto(MemberEntity memberEntity){
@@ -34,15 +37,16 @@ public class Utility {
     }
 
     /***
+     * Member
      * LoginDTO
      * DTO -> Entity
      */
     public MemberEntity dtoToEntityLogin(MemberLoginDTO memberDTO){
-        System.out.println(memberDTO);
         return new MemberEntity(memberDTO.getName(),memberDTO.getPassword());
     }
 
     /***
+     * Member
      * LoginDTO
      * Entity -> DTO
      */
@@ -54,6 +58,7 @@ public class Utility {
     }
 
     /***
+     * Member
      * Member 중복 체크
      */
     public void duplicateMemberCheck(MemberDTO member){
@@ -63,6 +68,7 @@ public class Utility {
     }
 
     /***
+     * Member
      * LoginDTO
      * Member 중복 체크
      */
@@ -71,4 +77,23 @@ public class Utility {
             throw new HandleMemberDuplicateException("중복된 회원입니다");
         });
     }
+
+    /***
+     * Board
+     * BoardDTO -> BoardEntity
+     */
+
+    public BoardEntity boardDtoToEntity(BoardDTO board){
+        return new BoardEntity(board);
+    }
+
+    /***
+     * Board
+     * BoardEntity -> BoardDTO
+     */
+
+    public void boardEntityToDto(){
+
+    }
+
 }

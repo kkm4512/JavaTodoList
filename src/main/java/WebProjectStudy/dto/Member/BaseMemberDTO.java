@@ -1,4 +1,4 @@
-package WebProjectStudy.dto;
+package WebProjectStudy.dto.Member;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

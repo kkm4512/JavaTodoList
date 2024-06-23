@@ -1,9 +1,9 @@
 package WebProjectStudy.controller;
 
-import WebProjectStudy.dto.MemberDTO;
-import WebProjectStudy.dto.MemberLoginDTO;
+import WebProjectStudy.dto.Member.MemberDTO;
+import WebProjectStudy.dto.Member.MemberLoginDTO;
 import WebProjectStudy.entity.MemberEntity;
-import WebProjectStudy.service.MemberService;
+import WebProjectStudy.service.Member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +50,6 @@ public class MemberController {
         System.out.println(member);
         return memberService.updateMember(member);
     }
+
 
 }

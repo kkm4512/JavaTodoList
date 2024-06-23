@@ -1,10 +1,10 @@
-package WebProjectStudy.service;
+package WebProjectStudy.service.Member;
 
-import WebProjectStudy.dto.MemberDTO;
-import WebProjectStudy.dto.MemberLoginDTO;
+import WebProjectStudy.dto.Member.MemberDTO;
+import WebProjectStudy.dto.Member.MemberLoginDTO;
 import WebProjectStudy.entity.MemberEntity;
 import WebProjectStudy.exception.HandleIsNotFoundException;
-import WebProjectStudy.repository.MemberRepository;
+import WebProjectStudy.repository.Member.MemberRepository;
 import WebProjectStudy.uilityClass.Utility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

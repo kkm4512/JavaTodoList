@@ -1,7 +1,6 @@
 package WebProjectStudy;
 
-import WebProjectStudy.repository.MemberRepository;
-import WebProjectStudy.service.MemberService;
+import WebProjectStudy.repository.Member.MemberRepository;
 import WebProjectStudy.uilityClass.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +21,10 @@ public class SpringConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(final CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:3000") // 클라이언트의 도메인 주소
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

@@ -1,4 +1,4 @@
-package WebProjectStudy.dto;
+package WebProjectStudy.dto.Member;
 
 import lombok.Getter;
 import lombok.Setter;
