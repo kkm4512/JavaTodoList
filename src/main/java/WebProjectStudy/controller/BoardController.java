@@ -30,8 +30,12 @@ public class BoardController {
 
     @GetMapping("/removeBoard/{id}")
     public boolean removeBoard(@PathVariable("id") Long id){
-        System.out.println(id);
         boardService.removeBoard(id);
         return true;
+    }
+
+    @PutMapping("updateBoard")
+    public BoardEntity updateBoard(@Valid @RequestBody BoardDTO boardDTO){
+        return boardService.updateBoard(boardDTO);
     }
 }

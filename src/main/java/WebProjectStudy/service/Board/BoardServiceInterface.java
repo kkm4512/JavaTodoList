@@ -9,4 +9,5 @@ public interface BoardServiceInterface {
     public void addBoard(BoardDTO board);
     public List<BoardEntity> findAll();
     public boolean removeBoard(Long id);
+    public BoardEntity updateBoard(BoardDTO boardDTO);
 }

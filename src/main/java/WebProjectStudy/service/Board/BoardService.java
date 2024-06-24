@@ -34,4 +34,12 @@ public class BoardService implements BoardServiceInterface{
         boardRepository.delete(boardEntity);
         return true;
     }
+
+    public BoardEntity updateBoard(BoardDTO boardDTO) {
+        BoardEntity boardEntity = boardRepository.findById(boardDTO.getId()).orElseThrow(() -> new HandleIsNotFoundException("해당 게시물은 존재하지 않습니다"));
+        boardEntity.setTitle(boardDTO.getTitle());
+        boardEntity.setDescriptions(boardDTO.getDescriptions());
+        boardRepository.save(boardEntity);
+        return boardEntity;
+    }
 }
